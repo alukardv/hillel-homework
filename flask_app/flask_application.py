@@ -67,4 +67,4 @@ def random():
     return f'<a href="./..">main</a> <br> {result}'
 
 
-app.run(debug=True)
+app.run(debug=True, host='0.0.0.0')
