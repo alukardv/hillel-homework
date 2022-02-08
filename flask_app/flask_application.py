@@ -1,7 +1,7 @@
 from flask import Flask, request, escape
 from datetime import datetime
 from random import randint
-import subprocess
+
 app = Flask(__name__)
 
 
@@ -15,9 +15,8 @@ def whoami():
     ip_address: str = str(request.remote_addr)
     user_agent: str = str(request.headers.get('User-Agent'))
     server_time: str = str(datetime.now().strftime('%H:%M:%S'))
-    pwd = subprocess.call(['pwd'])
 
-    return f'<a href="./..">main</a> <br> Browser client: {user_agent}<br> Ip client:{ip_address}<br> Current time on the server: {server_time} <br> {pwd}'
+    return f'<a href="./..">main</a> <br> Browser client: {user_agent}<br> Ip client:{ip_address}<br> Current time on the server: {server_time}'
 
 
 @app.route('/source_code/')
