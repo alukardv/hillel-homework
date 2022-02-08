@@ -21,7 +21,7 @@ def whoami():
 
 @app.route('/source_code/')
 def source_code():
-    with open('flask_application.py', 'r') as file:
+    with open('./flask_application.py', 'r') as file:
         lines_file = file.readlines()
     source_code_text = escape(''.join(lines_file))
 
