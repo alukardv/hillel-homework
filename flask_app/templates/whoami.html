@@ -1,0 +1,8 @@
+{% extends 'base.html' %}
+ 
+{% block content %}
+{{ super() }}
+Ip client: {{ip_address}}<br>
+Browser client: {{user_agent}}<br>
+Current time on the server: {{server_time}}<br>
+{% endblock %}

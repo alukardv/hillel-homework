@@ -1,49 +1,55 @@
-from flask import Flask, request, escape
+from flask import Flask, request, escape, render_template
 from datetime import datetime
 from random import randint
 
 app = Flask(__name__)
 
+menu = {'whoami': ' Whoami', 'source_code': 'Source code', 'random':'Random'}
 
 @app.route('/')
 def my_main():
-    return '<a href="./whoami">whoami</a> <br>'  '<a href="./source_code">source_code</a><br>' '<a href="./random?length=42&specials=1&digits=0">random</a> <br>'
+    return render_template('index.html', title="Home", menu=menu)
 
+#    '<a href="./whoami">whoami</a> <br>'  '<a href="./source_code">source_code</a><br>' '<a href="./random?length=42&specials=1&digits=0">random</a> <br>'
 
 @app.route('/whoami/')
 def whoami():
     ip_address: str = str(request.remote_addr)
     user_agent: str = str(request.headers.get('User-Agent'))
     server_time: str = str(datetime.now().strftime('%H:%M:%S'))
-
-    return f'<a href="./..">main</a> <br> Browser client: {user_agent}<br> Ip client:{ip_address}<br> Current time on the server: {server_time}'
+    return render_template('whoami.html', title="Whoami", menu=menu, ip_address=ip_address, user_agent=user_agent, server_time=server_time)
 
 
 @app.route('/source_code/')
 def source_code():
-    with open('./hillel-homework/flask_app/flask_application.py', 'r') as file:
+    with open('./flask_application.py', 'r') as file:
         lines_file = file.readlines()
     source_code_text = escape(''.join(lines_file))
+    return render_template('source_code.html', title="Source code", menu=menu, source_code_text=source_code_text)
 
-    return f'<a href="./..">main</a> <br> <pre>{source_code_text}</pre>'
 
-
-@app.route('/random/')
+@app.route('/random/', methods=['get', 'post'])
 def random():
     result: str = 'Error: length out of range'
     try:
-        length: int = int(request.values.get('length', 0))
+        length: int = int(request.form.get('length', 0))
     except ValueError:
         length = 0
         result: str = 'Error Value'
     except Exception:
         length = 0
     try:
-        specials: int = int(request.values.get('specials', 0))
+        if request.form.getlist('specials') == 'on':
+            specials: int = 0
+        else:
+            specials: int = 1
     except Exception:
         specials = 0
     try:
-        digits: int = int(request.values.get('digits', 0))
+        if request.form.getlist('digits') == 'on':
+            digits: int = 0
+        else:
+            digits: int = 1
     except Exception:
         digits = 0
 
@@ -64,7 +70,7 @@ def random():
         for i in range(length):
             result += pool_for_random[randint(0, len(pool_for_random)-1)]
 
-    return f'<a href="./..">main</a> <br> {result}'
+    return render_template('random.html', title="Random", menu=menu, result=result)
 
 
 app.run(debug=True, host='0.0.0.0')

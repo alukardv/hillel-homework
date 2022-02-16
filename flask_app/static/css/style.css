@@ -1,0 +1,89 @@
+@import url(‘https://fonts.googleapis.com/css?family=Raleway');
+
+.navbar{ background:#F97300;}
+.nav-link , .navbar-brand{ color: #f4f4f4; cursor: pointer;}
+.nav-link{ margin-right: 1em !important;}
+.nav-link:hover{ background: #f4f4f4; color: #f97300; }
+.navbar-collapse{ justify-content: flex-end;}
+.navbar-toggler{  background:#fff !important;}
+.bg-dark{ background-color:#343a40!important}
+.bg-primary{background-color:#007bff!important}
+
+
+.header{
+ background-image: url('../images/headerback.jpg');
+ background-attachment: fixed;
+ background-size: cover;
+ background-position: center;
+}
+
+
+
+.overlay{
+ position: absolute;
+ min-height: 100%;
+ min-width: 100%;
+ left: 0;
+ top: 0;
+ background: rgba(244, 244, 244, 0.79);
+}
+
+.main_page{
+ margin: 4em 0;
+    position: relative;
+}
+.main_page h1{
+ color:#F97300;
+ margin: 2em;
+}
+.main_page img{
+  height: 15rem;
+  width: 100%;
+  margin: 1em;
+}
+
+.random-form{
+ margin: 6em 0;
+ position: relative;
+}
+.random-form h1{
+ padding:2em 1px;
+ color: #F97300;
+}
+.random-form .right{
+ max-width: 600px;
+}
+.random-form .right .btn-secondary{
+ background:  #F97300;
+ color: #fff;
+ border:0;
+}
+.random-form .right .form-control::placeholder{
+ color: #888;
+ font-size: 16px;
+}
+
+.description{
+    position: absolute;
+    top: 30%;
+    margin: auto;
+    padding: 2em;
+}
+.description h1{
+ color:#F97300 ;
+}
+.description p{
+ color:#666;
+ font-size: 20px;
+ width: 50%;
+ line-height: 1.5;
+}
+.description button{
+ border:1px  solid #F97300;
+ background:#F97300;
+ color:#fff;
+}
+
+html,h1,h2,h3,h4,h5,h6,a{
+ font-family: "Raleway";
+}
