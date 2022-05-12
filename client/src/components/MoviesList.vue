@@ -1,4 +1,6 @@
+
 <template>
+  <div class='container'>
   <div class="row row-cols-1 row-cols-sm-2 row-cols-md-5 g-3">
         <div class="col" v-for="movie in movies">
           <div class="card shadow-sm">
@@ -7,11 +9,11 @@
               <text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
 
             <div class="card-body">
-              <a :href="`/movie/${movie.id}/`" style="a.movie-list-item, a.movie-list-item:hover, a.movie-list-item:visited { color: black; text-decoration: none; }">
+              <a :href="`/movie/${movie.id}/`" class="movie-list-item">
               <p class="card-text">{{movie.name}}</p>
               <p class="card-text">{{movie.director}}</p>
                 <p class="card-text">{{movie.date}}</p>
-                  <span v-for="genres in movie.genres" style="background-color: dimgray; color: whitesmoke; margin-right: 10px; border-radius: 3px; padding: 2px 10px;">{{ genres }}</span>
+                  <span v-for="genres in movie.genres" style="background-color: dimgray; color: whitesmoke; margin-right: 2px; border-radius: 3px; padding: 2px 2px;">{{ genres }}</span>
               </a>
             </div>
           </div>
@@ -19,14 +21,43 @@
       </div>
 
       <nav aria-label="Page navigation example">
-      <ul class="pagination">
-        <li class="page-item"><a class="page-link" href="#" @click="fetchMovies(previousLink)">Previous</a></li>
-        <li class="page-item"><a class="page-link" href="#">1</a></li>
-        <li class="page-item"><a class="page-link" href="#" @click="fetchMovies(current)">2</a></li>
-        <li class="page-item"><a class="page-link" href="#">3</a></li>
-        <li class="page-item"><a class="page-link" href="#" @click="fetchMovies(nextLink)">Next</a></li>
+        <ul class="pagination">
+
+        <li class="page-item" v-if="previousLink">
+          <a class="page-link" @click="fetchMovies(previousLink)">Previous</a>
+        </li>
+        <li class="page-item disabled" v-else>
+          <a class="page-link" href="#">Previous</a>
+        </li>
+
+        <li class="page-item" v-if="previousLink">
+          <a class="page-link" @click="fetchMovies(previousLink)">{{ previous_number }}</a>
+        </li>
+        <li class="page-item disabled" v-else>
+          <a class="page-link" href="#">{{current-1}}</a>
+        </li>
+
+        <li class="page-item active" aria-current="page">
+          <span class="page-link">{{current}}</span>
+        </li>
+
+        <li class="page-item" v-if="nextLink">
+          <a class="page-link" @click="fetchMovies(nextLink)">{{ next_number }}</a>
+        </li>
+        <li class="page-item disabled" v-else>
+          <a class="page-link" href="#">{{current+1}}</a>
+        </li>
+
+        <li class="page-item" v-if="nextLink">
+          <a class="page-link" @click="fetchMovies(nextLink)">Next</a>
+        </li>
+        <li class="page-item disabled" v-else>
+          <a class="page-link" href="#">Next</a>
+        </li>
+
       </ul>
 </nav>
+    </div>
 </template>
 
 <script>
@@ -39,6 +70,8 @@ export default {
       previousLink: null,
       pageNo: null,
       current: null,
+      previous_number: null,
+      next_number: null,
     }
   },
   async mounted() {
@@ -53,12 +86,13 @@ export default {
       this.nextLink = data["next"]
       this.previousLink = data["previous"]
       this.current = data['current']
+      this.previous_number = data["previous_number"];
+      this.next_number = data["next_number"];
     },
     async addMovie(url) {
       await fetch('/api/imdb/', {
         'method': 'POST',
         'data': {
-
         }
       } )
     },
@@ -67,7 +101,6 @@ export default {
 </script>
 
 <style scoped>
-
 nav {
   display: block;
   width: 150px;
@@ -76,5 +109,4 @@ nav {
 div{
   margin-top:20px;
 }
-
 </style>

@@ -22,13 +22,9 @@ class MovieSerilalizer(serializers.ModelSerializer):
             "genres",
             "date",
             "director",
-            "actor",
-            "composer",
-            "actress",
-            "producer",
-            "writer",
-            "cinematographer",
+            "persons", "actor", "composer", "actress", "producer", "writer", "cinematographer"
         ]
+
 
     director = serializers.SerializerMethodField()
     actor = serializers.SerializerMethodField()
@@ -37,6 +33,7 @@ class MovieSerilalizer(serializers.ModelSerializer):
     producer = serializers.SerializerMethodField()
     writer = serializers.SerializerMethodField()
     cinematographer = serializers.SerializerMethodField()
+
 
 
     def get_director(self, object):
@@ -99,8 +96,12 @@ class MovieSerilalizer(serializers.ModelSerializer):
 class MovieDetailSerializer(MovieSerilalizer):
     class Meta:
         model = Movie
-        fields = ["id", "name", "genres", "date", "director", "actor", "composer", "actress", "producer", "writer", "cinematographer",]
+        fields = ["id", "name", "genres", "date", "director", "persons", "actor", "composer", "actress", "producer", "writer", "cinematographer" ]
 
     persons = PersonSerializer(many=True)
+
+
+
+
 
 

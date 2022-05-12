@@ -10,7 +10,7 @@ from apps.imdb.serializers import MovieSerilalizer
 
 
 class MyView(ListCreateAPIView):
-    permission_classes = [permissions.IsAuthenticated]
+    #permission_classes = [permissions.IsAuthenticated]
     serializer_class = MovieSerilalizer
     queryset = Movie.objects.all().prefetch_related("persons")
 

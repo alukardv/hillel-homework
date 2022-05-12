@@ -34,7 +34,8 @@ services:
     links:
       - web
     environment:
-
+      - LETSENCRYPT_HOST=lms-11.ogir-ok.com
+      - VIRTUAL_HOST=lms-11.ogir-ok.com
       - VIRTUAL_PORT=80
     networks:
       - default

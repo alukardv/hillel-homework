@@ -1,11 +1,5 @@
 <template>
-<p>{{movie.director}}</p>
-  <p>{{movie.actor}}</p>
-  <p>{{movie.composer}}</p>
-  <p>{{movie.actress}}</p>
-  <p>{{movie.producer}}</p>
-  <p>{{movie.writer}}</p>
-  <p>{{movie.cinematographer}}</p>
+<div class='container'>
 <div class="card mb-3" style="max-width: 540px;">
     <div class="row g-0">
       <div class="col-md-4">
@@ -52,7 +46,7 @@
       </tbody>
     </table>
 </div>
-
+</div>
 </template>
 
 <script>
