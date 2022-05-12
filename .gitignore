@@ -164,5 +164,4 @@ pgdata
 
 settings/setting.local.py
 
-*.tsv
-!bd/
+
