@@ -6,7 +6,7 @@ from rest_framework.generics import (
 )
 
 from apps.imdb.models import Movie
-from apps.imdb.serializers import MovieSerilalizer
+from apps.imdb.serializers import MovieSerilalizer, MovieDetailSerializer
 
 
 class MyView(ListCreateAPIView):
@@ -17,4 +17,8 @@ class MyView(ListCreateAPIView):
 
 class MovieRetrieveUpdateView(RetrieveUpdateDestroyAPIView):
     serializer_class = MovieSerilalizer
+    queryset = Movie.objects.all().prefetch_related("persons")
+
+class MovieDetailRetrieveUpdateView(RetrieveUpdateDestroyAPIView):
+    serializer_class = MovieDetailSerializer
     queryset = Movie.objects.all().prefetch_related("persons")

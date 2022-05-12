@@ -1,4 +1,5 @@
 <template>
+
 <div class='container'>
 <div class="card mb-3" style="max-width: 540px;">
     <div class="row g-0">
@@ -8,45 +9,33 @@
       <p></p>
       <div class="col-md-8">
         <div class="card-body" style="position: relative;">
-          <p>{{movie.name}}</p>
-              <span style="background-color: dimgray; color: whitesmoke; border-radius: 3px; padding: 2px 12px;">{{movie.genres}}</span>
+          <p>{{movieName}}</p>
+              <span style="background-color: dimgray; color: whitesmoke; border-radius: 3px; padding: 2px 12px;">{{movieGenres}}</span>
+          <p>{{movieDirector}}</p>
+          <p>{{movieDate}}</p>
         </div>
       </div>
     </div>
   </div>
-  <div class="table-responsive" style="width: 42%;">
-    <table class="table">
-      <thead>
-        <tr>
-          <th scope="col">Name</th>
-          <th scope="col">Position</th>
-          <th scope="col">Role</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-        <td>{{movie.director}}</td><td>director</td><td></td>
-        </tr>
-        <tr>
-        <td>{{movie.actor}}</td><td>actor</td><td></td>
-        </tr>
-      <tr>
-        <td>{{movie.composer}}</td><td>composer</td><td></td>
-        </tr>
-      <tr>
-        <td>{{movie.producer}}</td><td>producer</td><td></td>
-        </tr>
-      <tr>
-        <td>{{movie.writer}}</td><td>writer</td><td></td>
-        </tr>
-      <tr>
-        <td>{{movie.cinematographer}}</td><td>cinematographer</td><td></td>
-        </tr>
+    <div class="table-responsive" style="width: 42%;">
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Position</th>
+            <th scope="col">Role</th>
+          </tr>
+        </thead>
+        <tbody>
 
-      </tbody>
-    </table>
-</div>
-</div>
+          <tr v-for="participant in movieParts">
+            <td>{{ participant.name }}</td><td>{{ participant.position }}</td><td>{{ participant.role }}</td>
+          </tr>
+
+        </tbody>
+      </table>
+  </div>
+  </div>
 </template>
 
 <script>
@@ -54,17 +43,33 @@ export default {
   name: "MovieDetail",
   data() {
     return {
-      movie: {}
+      movieId: null,
+      movieName: null,
+      movieDirector: null,
+      movieDate: null,
+      movieGenres: null,
+      movieParts: null,
     }
   },
   async mounted() {
-      const res = await fetch(`/api/imdb/${this.$route.params.id}`)
-      const data = await res.json()
-      this.movie = data;
+    await this.fetchMovieDetail()
+  },
+  methods: {
+    async fetchMovieDetail(url) {
+      const targetUrl = url ? url : `/api/imdb/movie/${this.$route.params.id}`;
+      const res = await fetch(targetUrl);
+      const data = await res.json();
+      this.movieId = data["id"];
+      this.movieName = data["name"];
+      this.movieDirector = data["director"];
+      this.movieDate = data["date"];
+      this.movieGenres = data["genres"];
+      this.movieParts = data["participants"];
+    }
   }
 }
 </script>
 
-<style scoped>
+<style>
 
 </style>
