@@ -3,6 +3,7 @@ from datetime import datetime
 from fastapi import FastAPI, Request
 from typing import Optional
 from starlette.templating import Jinja2Templates
+import uvicorn
 
 app = FastAPI()
 templates = Jinja2Templates(directory='templates/')
@@ -73,3 +74,6 @@ async def random(length: Optional[int] = 16, specials: Optional[int] = 0,
         'digits': digits,
         'result': result,
     })
+
+if __name__ == "__main__":
+    uvicorn.run(app, host="0.0.0.0", port=5000)
